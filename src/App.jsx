@@ -7,22 +7,19 @@ import { SupplierProvider } from './contexts/SupplierContext';
 import { OrderProvider } from './contexts/OrderContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import { useAuth } from './contexts/AuthContext';
-
-// Import pages
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import InventoryPage from './pages/InventoryPage';
 import SuppliersPage from './pages/SuppliersPage';
 import OrdersPage from './pages/OrdersPage';
 import SettingsPage from './pages/SettingsPage';
-
-// Import Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './styles/custom.css';
 
-// Smart redirect component for root path
-const RootRedirect = () => {
+// Smart redirect component for authenticated users
+const AuthenticatedRedirect = () => {
   const { currentUser, loading } = useAuth();
   
   if (loading) {
@@ -33,7 +30,7 @@ const RootRedirect = () => {
     </div>;
   }
   
-  return currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
+  return currentUser ? <Navigate to="/dashboard" replace /> : <LandingPage />;
 };
 
 // 404 Not Found component
@@ -46,7 +43,7 @@ const NotFound = () => {
         <h1 className="display-1 fw-bold text-primary">404</h1>
         <h2 className="mb-4">Page Not Found</h2>
         <p className="mb-4 text-muted">The page you're looking for doesn't exist.</p>
-        <Navigate to={currentUser ? "/dashboard" : "/login"} replace />
+        <Navigate to={currentUser ? "/dashboard" : "/"} replace />
       </div>
     </div>
   );
@@ -82,8 +79,8 @@ function App() {
               <div className="App">
                 <Toaster position="top-right" />
                 <Routes>
-                  {/* Root path - smart redirect based on auth status */}
-                  <Route path="/" element={<RootRedirect />} />
+                  {/* Root path - shows landing page or redirects to dashboard */}
+                  <Route path="/" element={<AuthenticatedRedirect />} />
                   
                   {/* Login route with redirect for authenticated users */}
                   <Route path="/login" element={<LoginRedirect />} />

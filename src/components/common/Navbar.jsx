@@ -1,16 +1,18 @@
 import React from 'react';
 import { Navbar as BootstrapNavbar, Nav, Dropdown, Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import AlertBadge from './AlertBadge';
 
 const Navbar = ({ toggleSidebar }) => {
   const { currentUser, userRole, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
+      navigate('/', { replace: true }); // Redirect to landing page
     } catch (error) {
       console.error('Logout error:', error);
     }
