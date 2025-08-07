@@ -64,7 +64,7 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section
-        className="hero-section bg-gradient-primary text-white py-5"
+        className="hero-section bg-gradient-modern text-white py-5"
         style={{ marginTop: "76px" }}
       >
         <Container className="d-flex align-items-center">
@@ -73,7 +73,7 @@ const LandingPage = () => {
               <div className="hero-content">
                 <h1 className="display-4 fw-bold mb-4">
                   Streamline Your Business with
-                  <span className="text-warning">ShopSync</span>
+                  <span className="text-warning"> ShopSync</span>
                 </h1>
                 <p className="lead mb-4">
                   The complete inventory management solution for modern
@@ -118,6 +118,72 @@ const LandingPage = () => {
                       </div>
                     </Col>
                   </Row>
+                </div>
+              </div>
+            </Col>
+            <Col lg={6} className="d-none d-lg-block">
+              <div className="dashboard-preview">
+                <div className="mockup-browser bg-white rounded-3 shadow-lg">
+                  <div className="mockup-browser-toolbar bg-light p-2 rounded-top">
+                    <div className="d-flex align-items-center">
+                      <div className="mockup-dot bg-danger rounded-circle me-1" style={{width: '8px', height: '8px'}}></div>
+                      <div className="mockup-dot bg-warning rounded-circle me-1" style={{width: '8px', height: '8px'}}></div>
+                      <div className="mockup-dot bg-success rounded-circle me-2" style={{width: '8px', height: '8px'}}></div>
+                      <small className="text-muted">ShopSync Dashboard</small>
+                    </div>
+                  </div>
+                  <div className="mockup-content p-3">
+                    <div className="row g-2 mb-3">
+                      <div className="col-4">
+                        <div className="bg-primary bg-opacity-10 p-2 rounded text-center">
+                          <i className="bi bi-box-seam text-primary fs-4"></i>
+                          <div className="small fw-bold text-primary mt-1">1,234</div>
+                          <div className="small text-muted">Products</div>
+                        </div>
+                      </div>
+                      <div className="col-4">
+                        <div className="bg-success bg-opacity-10 p-2 rounded text-center">
+                          <i className="bi bi-cart-check text-success fs-4"></i>
+                          <div className="small fw-bold text-success mt-1">89</div>
+                          <div className="small text-muted">Orders</div>
+                        </div>
+                      </div>
+                      <div className="col-4">
+                        <div className="bg-warning bg-opacity-10 p-2 rounded text-center">
+                          <i className="bi bi-exclamation-triangle text-warning fs-4"></i>
+                          <div className="small fw-bold text-warning mt-1">12</div>
+                          <div className="small text-muted">Low Stock</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-light rounded p-2 mb-2">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          <div className="bg-primary rounded me-2" style={{width: '20px', height: '20px'}}></div>
+                          <small className="fw-bold">Wireless Headphones</small>
+                        </div>
+                        <small className="text-success fw-bold">$89.99</small>
+                      </div>
+                    </div>
+                    <div className="bg-light rounded p-2 mb-2">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          <div className="bg-success rounded me-2" style={{width: '20px', height: '20px'}}></div>
+                          <small className="fw-bold">Smart Watch</small>
+                        </div>
+                        <small className="text-success fw-bold">$199.99</small>
+                      </div>
+                    </div>
+                    <div className="bg-light rounded p-2">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          <div className="bg-warning rounded me-2" style={{width: '20px', height: '20px'}}></div>
+                          <small className="fw-bold">Laptop Stand</small>
+                        </div>
+                        <small className="text-warning fw-bold">Low Stock</small>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Col>
