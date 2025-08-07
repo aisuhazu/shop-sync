@@ -207,7 +207,7 @@
 
 /* Soft Elegant Gradient - Muted Blues and Purples */
 .bg-gradient-modern {
-  background: linear-gradient(135deg, #6c7ce7 0%, #a8b5ff 50%, #c8d6ff 100%);
+  background: linear-gradient(135deg, #2d1b69 0%, #11998e 50%, #38ef7d 100%);
   position: relative;
   overflow: hidden;
 }
