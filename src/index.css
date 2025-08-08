@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Keep Bootstrap for components */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Custom component classes */
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-blue-700 border-primary hover:border-blue-700;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-sm border-0;
+  }
+  
+  .sidebar-nav-link {
+    @apply text-white/80 hover:text-white hover:bg-primary rounded-md px-4 py-3 mb-1 transition-all duration-300 flex items-center;
+  }
+  
+  .sidebar-nav-link.active {
+    @apply text-white bg-primary;
+  }
+}

@@ -139,7 +139,8 @@ const OrdersPage = () => {
         {/* Orders Table */}
         <Card>
           <Card.Body>
-            <Table striped bordered hover responsive>
+            {/* Desktop Table */}
+            <Table striped bordered hover responsive className="d-none d-md-table">
               <thead>
                 <tr>
                   <th>Order ID</th>
@@ -230,6 +231,96 @@ const OrdersPage = () => {
                 )}
               </tbody>
             </Table>
+
+            {/* Mobile Cards */}
+            <div className="d-md-none">
+              {filteredOrders.length > 0 ? (
+                filteredOrders.map((order) => (
+                  <div key={order.id} className="mobile-order-card mb-3">
+                    <div className="mobile-order-header">
+                      <div className="mobile-order-id">
+                        <strong>#{order.id}</strong>
+                        <div className="text-muted small">{order.date}</div>
+                      </div>
+                      <div className="mobile-order-total">
+                        <div className="mobile-total-amount">${order.total?.toFixed(2) || "0.00"}</div>
+                        <div className="mobile-items-count">{order.items?.length || 0} items</div>
+                      </div>
+                    </div>
+                    
+                    <div className="mobile-order-details">
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Customer</div>
+                        <div className="mobile-detail-value">
+                          <div>{order.customerName}</div>
+                          <div className="text-muted small">{order.customerEmail}</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Status</div>
+                        <div className="mobile-detail-value">
+                          <Form.Select
+                            size="sm"
+                            value={order.status}
+                            onChange={(e) =>
+                              handleStatusChange(order.id, e.target.value)
+                            }
+                            className="mobile-status-select"
+                          >
+                            {Object.values(ORDER_STATUS).map((status) => (
+                              <option key={status} value={status}>
+                                {status.charAt(0).toUpperCase() + status.slice(1)}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mobile-order-actions">
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => handleViewOrder(order)}
+                        className="flex-fill"
+                      >
+                        <i className="bi bi-eye me-1"></i>
+                        View
+                      </Button>
+                      <Button
+                        variant="outline-info"
+                        size="sm"
+                        onClick={() => handleEditOrder(order)}
+                        className="flex-fill"
+                      >
+                        <i className="bi bi-pencil me-1"></i>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => handleDeleteOrder(order)}
+                        disabled={
+                          order.status === "completed" ||
+                          order.status === "shipped"
+                        }
+                        className="flex-fill"
+                      >
+                        <i className="bi bi-trash me-1"></i>
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-muted p-4">
+                  {searchTerm || statusFilter !== "all"
+                    ? "No orders found matching your criteria."
+                    : "No orders found. Create your first order!"}
+                </div>
+              )}
+            </div>
           </Card.Body>
         </Card>
 

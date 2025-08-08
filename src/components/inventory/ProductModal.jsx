@@ -214,15 +214,6 @@ const ProductModal = ({ show, onHide, product = null, mode = "add" }) => {
     <Modal show={show} onHide={onHide} size="lg" backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>
-          <i
-            className={`bi ${
-              mode === "add"
-                ? "bi-plus-circle"
-                : mode === "edit"
-                ? "bi-pencil"
-                : "bi-eye"
-            } me-2`}
-          ></i>
           {modalTitle}
         </Modal.Title>
       </Modal.Header>
@@ -573,14 +564,7 @@ const ProductModal = ({ show, onHide, product = null, mode = "add" }) => {
                   {mode === "add" ? "Adding..." : "Updating..."}
                 </>
               ) : (
-                <>
-                  <i
-                    className={`bi ${
-                      mode === "add" ? "bi-plus" : "bi-check"
-                    } me-2`}
-                  ></i>
-                  {submitButtonText}
-                </>
+                submitButtonText
               )}
             </Button>
           )}

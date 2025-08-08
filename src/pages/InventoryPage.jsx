@@ -252,95 +252,204 @@ const InventoryPage = () => {
                 <h5 className="mb-0">Products ({filteredProducts.length})</h5>
               </Card.Header>
               <Card.Body className="p-0">
-                <Table responsive hover className="mb-0">
-                  <thead className="table-light">
-                    <tr>
-                      <th>Product</th>
-                      <th>SKU</th>
-                      <th>Category</th>
-                      <th>Stock</th>
-                      <th>Price</th>
-                      <th>Status</th>
-                      <th>Supplier</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredProducts.map((product) => (
-                      <tr key={product.id}>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <div
-                              className="bg-light rounded me-3"
-                              style={{ width: "40px", height: "40px" }}
-                            >
-                              {product.images && product.images.length > 0 ? (
-                                <img
-                                  src={product.images[0]}
-                                  alt={product.name}
-                                  className="w-100 h-100 object-fit-cover rounded"
-                                />
-                              ) : (
-                                <i className="bi bi-box-seam d-flex align-items-center justify-content-center h-100"></i>
-                              )}
+                {/* Desktop Table View */}
+                <div className="table-responsive">
+                  <Table hover className="mb-0">
+                    <thead className="table-light">
+                      <tr>
+                        <th>Product</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Supplier</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredProducts.map((product) => (
+                        <tr key={product.id}>
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <div
+                                className="bg-light rounded me-3"
+                                style={{ width: "40px", height: "40px" }}
+                              >
+                                {product.images && product.images.length > 0 ? (
+                                  <img
+                                    src={product.images[0]}
+                                    alt={product.name}
+                                    className="w-100 h-100 object-fit-cover rounded"
+                                  />
+                                ) : (
+                                  <i className="bi bi-box-seam d-flex align-items-center justify-content-center h-100"></i>
+                                )}
+                              </div>
+                              <div>
+                                <div className="fw-bold">{product.name}</div>
+                                {product.description && (
+                                  <small className="text-muted">
+                                    {product.description.substring(0, 50)}...
+                                  </small>
+                                )}
+                              </div>
                             </div>
-                            <div>
-                              <div className="fw-bold">{product.name}</div>
-                              {product.description && (
+                          </td>
+                          <td>
+                            <code>{product.sku}</code>
+                          </td>
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <div
+                                className="rounded me-2"
+                                style={{
+                                  width: "12px",
+                                  height: "12px",
+                                  backgroundColor: getCategoryColor(
+                                    product.category
+                                  ),
+                                }}
+                              ></div>
+                              <Badge 
+                                style={{
+                                  backgroundColor: getCategoryColor(product.category),
+                                  color: '#fff',
+                                  border: 'none'
+                                }}
+                              >
+                                {product.category}
+                              </Badge>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="fw-bold">{product.stock}</span>
+                          </td>
+                          <td>
+                            <span className="fw-bold">${product.price}</span>
+                            {product.costPrice > 0 && (
+                              <div>
                                 <small className="text-muted">
-                                  {product.description.substring(0, 50)}...
+                                  Cost: ${product.costPrice}
                                 </small>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <code>{product.sku}</code>
-                        </td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <div
-                              className="rounded me-2"
-                              style={{
-                                width: "12px",
-                                height: "12px",
-                                backgroundColor: getCategoryColor(
-                                  product.category
-                                ),
-                              }}
-                            ></div>
+                              </div>
+                            )}
+                          </td>
+                          <td>
+                            {getStockBadge(
+                              product.stock,
+                              product.lowStockThreshold
+                            )}
+                          </td>
+                          <td>{getSupplierName(product.supplier, suppliers)}</td>
+                          <td>
+                            <Dropdown>
+                              <Dropdown.Toggle
+                                variant="outline-secondary"
+                                size="sm"
+                              >
+                                <i className="bi bi-three-dots"></i>
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  onClick={() => handleViewProduct(product)}
+                                >
+                                  <i className="bi bi-eye me-2"></i>
+                                  View Details
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => handleEditProduct(product)}
+                                >
+                                  <i className="bi bi-pencil me-2"></i>
+                                  Edit
+                                </Dropdown.Item>
+                                <Dropdown.Divider />
+                                {hasPermission("canDeleteItems") && (
+                                  <Dropdown.Item
+                                    className="text-danger"
+                                    onClick={() => handleDeleteProduct(product)}
+                                  >
+                                    <i className="bi bi-trash me-2"></i>
+                                    Delete
+                                  </Dropdown.Item>
+                                )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="mobile-product-cards">
+                  {filteredProducts.map((product) => (
+                    <div key={product.id} className="mobile-product-card">
+                      <div className="mobile-product-header">
+                        <div className="mobile-product-image">
+                          {product.images && product.images.length > 0 ? (
+                            <img
+                              src={product.images[0]}
+                              alt={product.name}
+                            />
+                          ) : (
+                            <i className="bi bi-box-seam"></i>
+                          )}
+                        </div>
+                        <div className="mobile-product-info">
+                          <div className="mobile-product-name">{product.name}</div>
+                          <div className="mobile-product-sku">{product.sku}</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mobile-product-details">
+                        <div className="mobile-detail-item">
+                          <div className="mobile-detail-label">Category</div>
+                          <div className="mobile-detail-value">
                             <Badge 
+                              className="mobile-category-badge"
                               style={{
                                 backgroundColor: getCategoryColor(product.category),
-                                color: '#fff',
-                                border: 'none'
+                                color: '#fff'
                               }}
                             >
                               {product.category}
                             </Badge>
                           </div>
-                        </td>
-                        <td>
-                          <span className="fw-bold">{product.stock}</span>
-                        </td>
-                        <td>
-                          <span className="fw-bold">${product.price}</span>
-                          {product.costPrice > 0 && (
-                            <div>
-                              <small className="text-muted">
-                                Cost: ${product.costPrice}
-                              </small>
-                            </div>
-                          )}
-                        </td>
-                        <td>
+                        </div>
+                        
+                        <div className="mobile-detail-item">
+                          <div className="mobile-detail-label">Stock</div>
+                          <div className="mobile-detail-value mobile-stock">{product.stock}</div>
+                        </div>
+                        
+                        <div className="mobile-detail-item">
+                          <div className="mobile-detail-label">Price</div>
+                          <div className="mobile-detail-value">
+                            <div className="mobile-price">${product.price}</div>
+                            {product.costPrice > 0 && (
+                              <div className="mobile-cost">Cost: ${product.costPrice}</div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="mobile-detail-item">
+                          <div className="mobile-detail-label">Supplier</div>
+                          <div className="mobile-detail-value mobile-supplier">
+                            {getSupplierName(product.supplier, suppliers)}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mobile-product-actions">
+                        <div className="mobile-product-status">
                           {getStockBadge(
                             product.stock,
                             product.lowStockThreshold
                           )}
-                        </td>
-                        <td>{getSupplierName(product.supplier, suppliers)}</td>
-                        <td>
+                        </div>
+                        <div className="mobile-product-menu">
                           <Dropdown>
                             <Dropdown.Toggle
                               variant="outline-secondary"
@@ -373,11 +482,11 @@ const InventoryPage = () => {
                               )}
                             </Dropdown.Menu>
                           </Dropdown>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
                 {filteredProducts.length === 0 && (
                   <div className="text-center py-5">

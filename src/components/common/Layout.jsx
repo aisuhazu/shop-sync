@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
       )}
       
       <div className="main-content">
-        <Navbar onToggleSidebar={toggleSidebar} />
+        <Navbar toggleSidebar={toggleSidebar} />
         <div className="p-4">
           {children || <Outlet />}
         </div>

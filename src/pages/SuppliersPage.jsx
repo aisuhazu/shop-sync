@@ -114,7 +114,8 @@ const SuppliersPage = () => {
         {/* Suppliers Table */}
         <Card>
           <Card.Body>
-            <Table striped bordered hover responsive>
+            {/* Desktop Table */}
+            <Table striped bordered hover responsive className="d-none d-md-table">
               <thead>
                 <tr>
                   <th>Supplier Name</th>
@@ -180,6 +181,80 @@ const SuppliersPage = () => {
                 )}
               </tbody>
             </Table>
+
+            {/* Mobile Cards */}
+            <div className="d-md-none">
+              {filteredSuppliers.length > 0 ? (
+                filteredSuppliers.map((supplier) => (
+                  <div key={supplier.id} className="mobile-supplier-card mb-3">
+                    <div className="mobile-supplier-header">
+                      <div className="mobile-supplier-name">
+                        <strong>{supplier.name}</strong>
+                        {supplier.address && (
+                          <div className="text-muted small">{supplier.address}</div>
+                        )}
+                      </div>
+                      <div className="mobile-supplier-status">
+                        {getStatusBadge(supplier.status)}
+                      </div>
+                    </div>
+                    
+                    <div className="mobile-supplier-details">
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Contact Person</div>
+                        <div className="mobile-detail-value">{supplier.contactPerson}</div>
+                      </div>
+                      
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Email</div>
+                        <div className="mobile-detail-value">{supplier.email}</div>
+                      </div>
+                      
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Phone</div>
+                        <div className="mobile-detail-value">{supplier.phone}</div>
+                      </div>
+                      
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Products</div>
+                        <div className="mobile-detail-value">{supplier.productsCount}</div>
+                      </div>
+                      
+                      <div className="mobile-detail-item">
+                        <div className="mobile-detail-label">Last Order</div>
+                        <div className="mobile-detail-value">{supplier.lastOrder || "No orders"}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="mobile-supplier-actions">
+                      <Button
+                        variant="outline-info"
+                        size="sm"
+                        onClick={() => handleEditSupplier(supplier)}
+                        className="me-2"
+                      >
+                        <i className="bi bi-pencil me-1"></i>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => handleDeleteSupplier(supplier)}
+                      >
+                        <i className="bi bi-trash me-1"></i>
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-muted p-4">
+                  {searchTerm || statusFilter !== "all"
+                    ? "No suppliers found matching your criteria."
+                    : "No suppliers found. Add your first supplier!"}
+                </div>
+              )}
+            </div>
           </Card.Body>
         </Card>
 

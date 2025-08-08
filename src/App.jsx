@@ -15,6 +15,7 @@ import SuppliersPage from './pages/SuppliersPage';
 import OrdersPage from './pages/OrdersPage';
 import SettingsPage from './pages/SettingsPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Add this line
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './styles/custom.css';
 
